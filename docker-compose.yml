@@ -1,0 +1,63 @@
+services:
+  redis:
+    container_name: boilerplate_redis
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - "6379:6379"
+    hostname: redis
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  node:
+    container_name: boilerplate_node
+    build:
+      context: .
+      dockerfile: .dev/node/Dockerfile
+    volumes:
+      - ./.dev/scripts/start-api.sh:/usr/src/scripts/start-api.sh
+      - ./:/usr/src/app
+      - ./storage:/usr/src/storage:rw
+      - ./${DOCKER_ENV_FILE:-.env}:/usr/src/app/.env:rw
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    command: /usr/src/scripts/start-api.sh
+    env_file:
+      - ${DOCKER_ENV_FILE:-.env}
+    depends_on:
+      - postgres
+  nginx:
+    container_name: boilerplate_nginx
+    image: nginx:latest
+    volumes:
+      - ./.dev/nginx/app.conf:/etc/nginx/sites-available/app.conf
+      - ./.dev/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./.dev/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./.dev/ssl/nginx-selfsigned.crt:/etc/ssl/certs/nginx-selfsigned.crt:rw
+      - ./.dev/ssl/nginx-selfsigned.key:/etc/ssl/private/nginx-selfsigned.key:rw
+    env_file:
+      - ${DOCKER_ENV_FILE:-.env}
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - node
+  postgres:
+    container_name: boilerplate_postgres
+    image: postgres:16.3
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - ${DATABASE_PORT}:5432
+    volumes:
+      - postgres-date:/var/lib/postgresql/data
+
+volumes:
+  postgres-date:
