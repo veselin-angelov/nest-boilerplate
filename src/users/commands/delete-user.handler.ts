@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Queue } from 'bullmq';
 import { DeleteUserCommand } from '@app/users/commands/delete-user.command';
-import { UserRepository } from '@app/users/repositories';
+import { UserRepository } from '@app/shared/entities/user/repositories';
 import { InjectQueue } from '@nestjs/bullmq';
 import { DeleteUserConsumer } from '@app/users/consumers';
 

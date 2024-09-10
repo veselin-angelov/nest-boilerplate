@@ -1,11 +1,11 @@
 import { FilterQuery } from '@mikro-orm/core';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { UsersQuery } from '@app/users/queries/users.query';
-import { UserRepository } from '@app/users/repositories';
+import { UserRepository } from '@app/shared/entities/user/repositories';
 import { FiltersQueryBuilderService } from '@app/shared/filter/services';
 import { UsersResultWithCountDto } from '@app/users/dtos';
-import { User } from '@app/users/entities';
 import { orderStringToObject } from '@app/shared/helpers';
+import { User } from '@app/shared/entities/user/entities';
 
 @QueryHandler(UsersQuery)
 export class UsersHandler implements IQueryHandler<UsersQuery> {

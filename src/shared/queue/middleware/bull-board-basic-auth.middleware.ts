@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
-import { UserRepository } from '@app/users/repositories';
+import { UserRepository } from 'src/shared/entities/user/repositories';
 import { compareSync } from 'bcrypt';
 
 @Injectable()

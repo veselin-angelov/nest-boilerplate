@@ -1,11 +1,10 @@
 import { Entity, Property } from '@mikro-orm/core';
 import { ApiProperty } from '@nestjs/swagger';
-import { CustomBaseEntity } from 'src/shared/database/entities';
-import { UserRepository } from '@app/users/repositories';
+import { CustomBaseEntity } from '@app/shared/entities';
+import { UserRepository } from '@app/shared/entities/user/repositories';
 
 @Entity({
   repository: () => UserRepository,
-  tableName: 'user',
 })
 export class User extends CustomBaseEntity {
   @ApiProperty({

@@ -6,10 +6,10 @@ import {
   InjectUser,
 } from '@app/users/decorators';
 import { ApiTags } from '@nestjs/swagger';
-import { User } from '@app/users/entities';
 import { CurrentUserQuery } from '@app/users/queries';
 import { UpdateCurrentUserDto } from '@app/users/dtos';
 import { SaveUserCommand } from '@app/users/commands';
+import { User } from '@app/shared/entities/user/entities';
 
 @ApiTags('Me')
 @Controller('me')

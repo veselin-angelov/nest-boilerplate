@@ -1,4 +1,4 @@
-import { UserRepository } from '@app/users/repositories';
+import { UserRepository } from 'src/shared/entities/user/repositories';
 import { Injectable } from '@nestjs/common';
 import {
   ValidationArguments,

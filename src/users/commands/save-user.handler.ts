@@ -3,8 +3,8 @@ import { EntityManager } from '@mikro-orm/postgresql';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { omit } from 'lodash';
 import { SaveUserCommand } from '@app/users/commands/save-user.command';
-import { UserRepository } from '@app/users/repositories';
-import { User } from '@app/users/entities';
+import { UserRepository } from 'src/shared/entities/user/repositories';
+import { User } from '@app/shared/entities/user/entities';
 import { hashSync } from 'bcrypt';
 import { UserSavedEvent } from '@app/users/events';
 

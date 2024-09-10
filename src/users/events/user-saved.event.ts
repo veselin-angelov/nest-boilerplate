@@ -1,6 +1,6 @@
-import { User } from '@app/users/entities';
 import { EntityDTO } from '@mikro-orm/core';
 import { IEvent } from '@nestjs/cqrs';
+import { User } from '@app/shared/entities/user/entities';
 
 export class UserSavedEvent implements IEvent {
   public constructor(

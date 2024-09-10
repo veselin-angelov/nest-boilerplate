@@ -9,7 +9,7 @@ import {
   IJobProcessor,
   QueueLogger,
 } from '@app/shared/queue';
-import { UserRepository } from '@app/users/repositories';
+import { UserRepository } from '@app/shared/entities/user/repositories';
 
 @Consumer({
   queueName: DeleteUserConsumer.queueName,

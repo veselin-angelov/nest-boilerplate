@@ -19,10 +19,10 @@ import {
   ApiUsers,
 } from '@app/users/decorators';
 import { UserQuery, UsersQuery } from '@app/users/queries';
-import { User } from '@app/users/entities';
 import { UserDto, UsersResultWithCountDto } from '@app/users/dtos';
 import { DeleteUserCommand, SaveUserCommand } from '@app/users/commands';
 import { ListingQueryDto, MessageResponseDto } from '@app/shared/dtos';
+import { User } from '@app/shared/entities/user/entities';
 
 @ApiTags('Users')
 @Controller('users')

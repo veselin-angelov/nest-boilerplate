@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { UserQuery } from '@app/users/queries/user.query';
-import { UserRepository } from '@app/users/repositories';
+import { UserRepository } from '@app/shared/entities/user/repositories';
 
 @QueryHandler(UserQuery)
 export class UserHandler implements IQueryHandler<UserQuery> {

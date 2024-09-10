@@ -6,8 +6,8 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 import { Api } from '@app/shared/decorators';
-import { User } from '@app/users/entities';
 import { InjectIdToBodyInterceptor } from '@app/shared/interceptors';
+import { User } from '@app/shared/entities/user/entities';
 
 export const ApiSaveUser = (edit = false) =>
   applyDecorators(

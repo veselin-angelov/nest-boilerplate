@@ -5,6 +5,7 @@ import { DatabaseModule } from '@app/shared/database/database.module';
 import { LoggerModule } from '@app/shared/logger/logger.module';
 import { FilterModule } from '@app/shared/filter/filter.module';
 import { QueueModule } from '@app/shared/queue/queue.module';
+import { EntitiesModule } from '@app/shared/entities/entities.module';
 
 @Global()
 @Module({
@@ -17,14 +18,15 @@ import { QueueModule } from '@app/shared/queue/queue.module';
     FilterModule,
     DatabaseModule,
     LoggerModule,
-    QueueModule.forRoot(),
+    QueueModule,
+    EntitiesModule,
   ],
   exports: [
     ConfigModule,
     DatabaseModule,
     LoggerModule,
     FilterModule,
-    QueueModule,
+    EntitiesModule,
   ],
 })
 export class SharedModule {}

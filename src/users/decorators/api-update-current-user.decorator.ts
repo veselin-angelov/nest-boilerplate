@@ -6,7 +6,7 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 import { Api } from '@app/shared/decorators';
-import { User } from '@app/users/entities';
+import { User } from '@app/shared/entities/user/entities';
 
 export const ApiUpdateCurrentUser = () =>
   applyDecorators(
