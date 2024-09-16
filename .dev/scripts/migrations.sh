@@ -5,7 +5,7 @@ then
   export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
 fi
 
-export DATABASE_MIGRATIONS_PATH=./src/migrations
+export DATABASE_MIGRATIONS_PATH=./migrations
 export DATABASE_ENTITIES_PATH="./(src|libs)/**/entities/*.entity.ts"
 export DATABASE_SEEDERS_PATH="./tests/database/**/"
 MESSAGE="Enter the name of the command. Can be generate, up, down, list, pending, dump, debug, import, initial, dump-for-tests, seed, seed-all, create-seed, fresh-seed, fresh-seed-all or exit: "

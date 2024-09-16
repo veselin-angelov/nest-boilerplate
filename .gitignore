@@ -36,6 +36,7 @@ lerna-debug.log*
 
 # Node
 .env*
+!.env.example
 dist
 
 # Yarn
