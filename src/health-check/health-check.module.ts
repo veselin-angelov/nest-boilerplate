@@ -12,10 +12,10 @@ import { REDIS_CONFIG_KEY, RedisConfig } from '@app/config';
       provide: Redis,
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const { host, port } =
+        const { host, port, username, password } =
           configService.get<RedisConfig>(REDIS_CONFIG_KEY)!;
 
-        return new Redis({ host, port });
+        return new Redis({ host, port, username, password });
       },
     },
   ],

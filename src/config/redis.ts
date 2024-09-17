@@ -5,6 +5,8 @@ export type RedisConfig = {
   port: number;
   prefix: string;
   ttl: number;
+  username: string;
+  password: string;
 };
 
 export const redis = (): {
@@ -15,5 +17,7 @@ export const redis = (): {
     port: Number(process.env.REDIS_PORT),
     ttl: Number(process.env.REDIS_TTL),
     prefix: process.env.REDIS_PREFIX as string,
+    username: process.env.REDIS_USERNAME as string,
+    password: process.env.REDIS_PASSWORD as string,
   },
 });
