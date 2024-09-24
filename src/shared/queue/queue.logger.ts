@@ -14,9 +14,12 @@ export class QueueLogger extends Logger {
     await this.job.log(message);
   }
 
-  public async error(message: string, trace?: string): Promise<void> {
+  public error(message: string, trace?: string): void {
     this.logger.error(message, trace);
+  }
 
-    await this.job.log(`Error: ${message} | Trace: ${trace}`);
+  public async warn(message: string): Promise<void> {
+    this.logger.warn(message);
+    await this.job.log(`Warn: ${message}`);
   }
 }

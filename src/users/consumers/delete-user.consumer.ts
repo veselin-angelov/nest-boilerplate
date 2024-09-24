@@ -30,7 +30,7 @@ export class DeleteUserConsumer implements IJobProcessor {
     error: Error,
   ): Promise<void> {
     const logger = createQueueLogger(this.logger, job);
-    await logger.error(error.message, error.stack);
+    logger.error(error.message, error.stack);
   }
 
   public async process(job: Job<{ userId: string }>): Promise<void> {
@@ -46,7 +46,12 @@ export class DeleteUserConsumer implements IJobProcessor {
   ): Promise<void> {
     await logger.log(`User delete sequence for '${userId}' started!`);
 
-    const user = await this.userRepository.findOneOrFail(userId);
+    const user = await this.userRepository.findOne(userId);
+
+    if (!user) {
+      await logger.warn(`User '${userId}' not found!`);
+      return;
+    }
 
     console.log('User:', user);
 

@@ -7,26 +7,29 @@ export const orderStringToObject = (
   return order
     .filter((f) => {
       const [field] = f.split(',');
-
       return allowed.includes(field);
     })
     .reduce(
       (a, f) => {
         const [field, sort] = f.split(',');
 
-        if (field.includes('.')) {
-          const segments = field.split('.');
-          a[segments[0] as string] = {
-            [segments[1]]: `${sort} nulls ${nulls}` as any,
-          };
-        } else {
-          a[field] = `${sort} nulls ${nulls}` as any;
-        }
+        const addSortToField = (fieldToAdd: string) => {
+          if (fieldToAdd.includes('.')) {
+            const segments = fieldToAdd.split('.');
+            if (!a[segments[0]]) {
+              a[segments[0]] = {};
+            }
+            (a[segments[0]] as Record<string, string>)[segments[1]] =
+              `${sort} nulls ${nulls}`;
+          } else {
+            a[fieldToAdd] = `${sort} nulls ${nulls}` as any;
+          }
+        };
+
+        addSortToField(field);
 
         if (additionalFieldsMap[field]) {
-          additionalFieldsMap[field].forEach((f) => {
-            a[f] = `${sort} nulls ${nulls}` as any;
-          });
+          additionalFieldsMap[field].forEach(addSortToField);
         }
 
         return a;
