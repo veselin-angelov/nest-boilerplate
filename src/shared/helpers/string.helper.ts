@@ -4,6 +4,10 @@ export const orderStringToObject = (
   additionalFieldsMap: Record<string, string[]> = {},
   nulls: 'first' | 'last' = 'last',
 ): Record<string, 'asc' | 'desc' | Record<string, 'asc' | 'desc'>> => {
+  if (!order) {
+    return {};
+  }
+
   return order
     .filter((f) => {
       const [field] = f.split(',');
@@ -13,23 +17,27 @@ export const orderStringToObject = (
       (a, f) => {
         const [field, sort] = f.split(',');
 
-        const addSortToField = (fieldToAdd: string) => {
-          if (fieldToAdd.includes('.')) {
-            const segments = fieldToAdd.split('.');
-            if (!a[segments[0]]) {
-              a[segments[0]] = {};
+        const addSortToField = (fieldToAdd: string, obj: any) => {
+          const segments = fieldToAdd.split('.');
+          const lastSegment = segments.pop()!;
+          let current = obj;
+
+          segments.forEach((segment) => {
+            if (!current[segment]) {
+              current[segment] = {};
             }
-            (a[segments[0]] as Record<string, string>)[segments[1]] =
-              `${sort} nulls ${nulls}`;
-          } else {
-            a[fieldToAdd] = `${sort} nulls ${nulls}` as any;
-          }
+            current = current[segment];
+          });
+
+          current[lastSegment] = `${sort} nulls ${nulls}`;
         };
 
-        addSortToField(field);
+        addSortToField(field, a);
 
         if (additionalFieldsMap[field]) {
-          additionalFieldsMap[field].forEach(addSortToField);
+          additionalFieldsMap[field].forEach((additionalField) =>
+            addSortToField(additionalField, a),
+          );
         }
 
         return a;
